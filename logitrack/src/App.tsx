@@ -5,6 +5,7 @@ import LoginPage from '@/app/login';
 import NotFoundPage from '@/app/not-found';
 import DashboardPage from '@/app/dashboard';
 import OrdersPage from '@/app/orders';
+import OrderDetailsPage from '@/app/orders/OrderDetailsPage';
 import FleetPage from '@/app/fleet';
 import DriversPage from '@/app/drivers';
 import AssignmentsPage from '@/app/assignments';
@@ -26,6 +27,7 @@ function App() {
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/orders/:id" element={<OrderDetailsPage />} />
             <Route path="/fleet" element={<FleetPage />} />
             <Route path="/drivers" element={<DriversPage />} />
             <Route path="/assignments" element={<AssignmentsPage />} />
