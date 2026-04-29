@@ -24,13 +24,37 @@ import {
   TableRow 
 } from '@/components/ui/table';
 import { KPI_DATA, CHART_DATA, RECENT_ORDERS } from '@/mock/dashboard';
+import { MOCK_FLEET } from '@/mock/fleet';
+import { MOCK_ORDERS } from '@/mock/orders';
 
 export default function DashboardPage() {
+  const activeFleetCount = MOCK_FLEET.filter(f => f.status === 'in_transit').length;
+  const availableFleetCount = MOCK_FLEET.filter(f => f.status === 'available').length;
+  const totalOrders = MOCK_ORDERS.length;
+  const lateOrders = MOCK_ORDERS.filter(o => o.status === 'late').length;
+
+  const dynamicKpis = [
+    {
+      ...KPI_DATA[0],
+      value: totalOrders.toLocaleString(),
+    },
+    {
+      ...KPI_DATA[1],
+      value: activeFleetCount.toString(),
+      description: `${availableFleetCount} unit tersedia`,
+    },
+    {
+      ...KPI_DATA[2],
+      value: lateOrders.toString(),
+    },
+    KPI_DATA[3], // Pendapatan tetap mock
+  ];
+
   return (
     <div className="space-y-6 pb-8">
       {/* KPI Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {KPI_DATA.map((kpi, index) => (
+        {dynamicKpis.map((kpi, index) => (
           <KpiCard key={index} {...kpi} />
         ))}
       </div>

@@ -1,13 +1,16 @@
 import { cn } from '@/lib/utils';
-import { STATUS_MAP, type OrderStatus } from '@/constants/status';
+import { STATUS_MAP, FLEET_STATUS_MAP, type OrderStatus, type FleetStatus } from '@/constants/status';
 
 interface StatusBadgeProps {
-  status: OrderStatus;
+  status: OrderStatus | FleetStatus;
+  type?: 'order' | 'fleet';
   className?: string;
 }
 
-export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, className }) => {
-  const config = STATUS_MAP[status];
+export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type = 'order', className }) => {
+  const config = type === 'order' 
+    ? STATUS_MAP[status as OrderStatus] 
+    : FLEET_STATUS_MAP[status as FleetStatus];
   
   const colorClasses = {
     warning: 'bg-status-warning/10 text-status-warning border-status-warning/20',
@@ -15,6 +18,8 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, className }) =
     success: 'bg-status-success/10 text-status-success border-status-success/20',
     danger: 'bg-status-danger/10 text-status-danger border-status-danger/20',
   };
+
+  if (!config) return null;
 
   return (
     <span
@@ -28,3 +33,4 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, className }) =
     </span>
   );
 };
+
