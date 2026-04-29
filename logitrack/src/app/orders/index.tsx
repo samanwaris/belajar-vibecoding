@@ -32,11 +32,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MOCK_ORDERS, type Order } from '@/mock/orders';
 import { STATUS_MAP, type OrderStatus } from '@/constants/status';
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { OrderForm } from './OrderForm';
+import { useNavigate } from 'react-router-dom';
 
 export default function OrdersPage() {
+  const navigate = useNavigate();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [statusFilter, setStatusFilter] = useState<OrderStatus | 'all'>('all');
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   const columns: ColumnDef<Order>[] = [
     {
@@ -107,7 +112,9 @@ export default function OrdersPage() {
                 Salin ID Pesanan
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-surface-border" />
-              <DropdownMenuItem>Lihat Detail</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate(`/orders/${row.original.id}`)}>
+                Lihat Detail
+              </DropdownMenuItem>
               <DropdownMenuItem>Lacak Lokasi</DropdownMenuItem>
               <DropdownMenuItem className="text-status-danger">Batalkan</DropdownMenuItem>
             </DropdownMenuContent>
@@ -144,9 +151,14 @@ export default function OrdersPage() {
           <h1 className="text-2xl font-bold text-white">Manajemen Pengiriman</h1>
           <p className="text-surface-muted">Kelola dan pantau semua rute pengiriman logistik.</p>
         </div>
-        <Button className="bg-brand-primary hover:bg-brand-primary/90 text-white">
-          + Pesanan Baru
-        </Button>
+        <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
+          <DialogTrigger asChild>
+            <Button className="bg-brand-primary hover:bg-brand-primary/90 text-white">
+              + Pesanan Baru
+            </Button>
+          </DialogTrigger>
+          <OrderForm onSuccess={() => setIsCreateModalOpen(false)} />
+        </Dialog>
       </div>
 
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
