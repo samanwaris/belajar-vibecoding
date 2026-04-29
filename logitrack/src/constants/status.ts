@@ -16,3 +16,11 @@ export const FLEET_STATUS_MAP = {
 } as const;
 
 export type FleetStatus = keyof typeof FLEET_STATUS_MAP;
+
+export const DRIVER_STATUS_MAP = {
+  available: { label: 'Tersedia', color: 'success' },
+  in_transit: { label: 'Dalam Perjalanan', color: 'info' },
+  off: { label: 'Off', color: 'danger' },
+} as const;
+
+export type DriverStatus = keyof typeof DRIVER_STATUS_MAP;

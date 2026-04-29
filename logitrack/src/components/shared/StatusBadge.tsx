@@ -1,16 +1,17 @@
 import { cn } from '@/lib/utils';
-import { STATUS_MAP, FLEET_STATUS_MAP, type OrderStatus, type FleetStatus } from '@/constants/status';
+import { STATUS_MAP, FLEET_STATUS_MAP, DRIVER_STATUS_MAP, type OrderStatus, type FleetStatus, type DriverStatus } from '@/constants/status';
 
 interface StatusBadgeProps {
-  status: OrderStatus | FleetStatus;
-  type?: 'order' | 'fleet';
+  status: OrderStatus | FleetStatus | DriverStatus;
+  type?: 'order' | 'fleet' | 'driver';
   className?: string;
 }
 
 export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type = 'order', className }) => {
-  const config = type === 'order' 
-    ? STATUS_MAP[status as OrderStatus] 
-    : FLEET_STATUS_MAP[status as FleetStatus];
+  let config;
+  if (type === 'order') config = STATUS_MAP[status as OrderStatus];
+  else if (type === 'fleet') config = FLEET_STATUS_MAP[status as FleetStatus];
+  else if (type === 'driver') config = DRIVER_STATUS_MAP[status as DriverStatus];
   
   const colorClasses = {
     warning: 'bg-status-warning/10 text-status-warning border-status-warning/20',
