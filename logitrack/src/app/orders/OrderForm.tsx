@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {
@@ -65,12 +67,14 @@ export function OrderForm({ onSuccess }: OrderFormProps) {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     // Simulasikan penambahan data
-    setTimeout(() => {
-      onSuccess?.();
-    }, 500);
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    toast.success("Pesanan berhasil dibuat!", {
+      description: `Pesanan untuk ${values.customer} telah tersimpan di sistem.`,
+    });
+    onSuccess?.();
   }
 
   return (
@@ -210,8 +214,16 @@ export function OrderForm({ onSuccess }: OrderFormProps) {
             <Button 
               type="submit" 
               className="bg-brand-primary hover:bg-brand-primary/90 text-white w-full"
+              disabled={form.formState.isSubmitting}
             >
-              Simpan Pesanan
+              {form.formState.isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Menyimpan...
+                </>
+              ) : (
+                "Simpan Pesanan"
+              )}
             </Button>
           </div>
         </form>

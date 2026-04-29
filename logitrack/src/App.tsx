@@ -14,9 +14,12 @@ import FinancePage from '@/app/finance';
 import ReportsPage from '@/app/reports';
 import SettingsPage from '@/app/settings';
 
+import { Toaster } from 'sonner';
+
 function App() {
   return (
     <BrowserRouter>
+      <Toaster position="top-right" expand={false} richColors theme="dark" />
       <Routes>
         {/* Public Routes */}
         <Route path="/login" element={<LoginPage />} />
