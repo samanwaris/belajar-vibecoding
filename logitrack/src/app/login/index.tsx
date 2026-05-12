@@ -38,7 +38,7 @@ export default function LoginPage() {
   function onSubmit(values: LoginFormValues) {
     // Mock login
     console.log(values);
-    login('Admin LogiTrack', 'Super Admin');
+    login('admin@logitrack.com', '123456');
     navigate('/dashboard');
   }
 
@@ -76,10 +76,10 @@ export default function LoginPage() {
                       <FormControl>
                         <div className="relative">
                           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-muted" />
-                          <Input 
-                            placeholder="admin@logitrack.com" 
-                            className="pl-10 bg-surface-bg border-surface-border text-white focus:ring-brand-primary" 
-                            {...field} 
+                          <Input
+                            placeholder="admin@logitrack.com"
+                            className="pl-10 bg-surface-bg border-surface-border text-white focus:ring-brand-primary"
+                            {...field}
                           />
                         </div>
                       </FormControl>
@@ -96,11 +96,11 @@ export default function LoginPage() {
                       <FormControl>
                         <div className="relative">
                           <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-muted" />
-                          <Input 
-                            type="password" 
-                            placeholder="••••••••" 
-                            className="pl-10 bg-surface-bg border-surface-border text-white focus:ring-brand-primary" 
-                            {...field} 
+                          <Input
+                            type="password"
+                            placeholder="••••••••"
+                            className="pl-10 bg-surface-bg border-surface-border text-white focus:ring-brand-primary"
+                            {...field}
                           />
                         </div>
                       </FormControl>
